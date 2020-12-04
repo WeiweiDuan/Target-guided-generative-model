@@ -19,9 +19,9 @@ numpy, cv2, os
 
 ### 2) Run TGG
 ### Step 1: Data Generation
-<mark> python3 crop_images.py --data_dir path-to-dataset --loc_idx name-or-index-of-image --mask_name region-annotation --obj_name target-object-name --stride sliding-window-stride --win_size sliding-window-size </mark>
+<code> python3 crop_images.py --data_dir {path-to-dataset} --loc_idx {name-or-index-of-image} --mask_name {region-annotation} --obj_name {target-object-name} --stride {sliding-window-stride} --win_size {sliding-window-size} </code>
   
-For example, <mark>python3 crop_images.py --data_dir '/data/weiweidu/COWC/DetectionPatches_800x800/Toronto_ISPRS' --loc_idx 'Toronto_03559.8.2' --mask_name None --obj_name='car' --stride=20 --win_size 50 </mark>
+For example, <code>python3 crop_images.py --data_dir '/data/weiweidu/COWC/DetectionPatches_800x800/Toronto_ISPRS' --loc_idx 'Toronto_03559.8.2' --mask_name None --obj_name='car' --stride=20 --win_size 50 </code>
 
 gen_train_data.py
 
