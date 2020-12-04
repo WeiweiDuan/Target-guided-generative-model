@@ -1,23 +1,34 @@
 from shutil import copyfile
 import os
-from utils import create_folder, remove_files, load_file_names
+import argparse
+from utils.helper import create_folder, remove_files, load_file_names
+
 '''
 manually choose a target images in the folder ('./temp') saving the cropped images
 and select all or a part of cropped images for the training phase
 if the computation resources are limited, please select a part of cropped images
 '''
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--dataset_name", type=str, default='COWC)
+parser.add_argument("--loc_idx", type=str, default='Toronto_03559.8.2')
+parser.add_argument("--obj_name", type=str, default='car')
+parser.add_argument("--pos_names", type=list, default=['100_100'])
+parser.add_argument("--sample_portion", type=float, default=1.0)
+args = parser.parse_args()
+
 unlabeled_imgs_path = './temp'
 # the name of chosen target images, named by top_left coordinate
-pos_names = ['220_260']
+pos_names = args.pos_names
 img_type = '.png'
-sample_portion = 1.0
+sample_portion = args.sample_portion
 
 # the dir to save manually labeled and classified positive images
-dataset_name = 'COWC'
-obj_name = 'car'
+dataset_name = args.dataset_name
+obj_name = args.obj_name
 #location name or index in the dataset
-loc_idx = 'Toronto_03559.8.2'
-
+loc_idx = args.loc_idx
+                    
 sample_path = os.path.join('data', dataset_name, obj_name)
 loc_name = '_'.join([loc_idx, obj_name])
 
