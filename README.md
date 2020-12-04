@@ -28,6 +28,8 @@ For example, <code>python3 crop_images.py --data_dir '/data/weiweidu/COWC/Detect
 For example, <code>python3 gen_train_data.py --dataset_name 'COWC' --loc_idx 'Toronto_03559.8.2' --obj_name='car' --pos_names ['100_100'] --sample_portion 1.0</code>
 
 ### Step 2: Iteratively Training TGG
-train.py
+<code>python3 train.py --dataset_name {dataset-name} --loc_idx {name-or-index-of-image} --obj_name {target-object-name} --augmentation {True/False} --image_size {sliding-window-size} --stride {sliding-window-stride} --num_epochs {number-of-epochs} --learning_rate {learning-rate} --batch_size {batch-size} --weight {weight-for-multiloss} --saved_model_path {path-to-save-model}
+  
+For example, <code>python3 train.py --dataset_name 'COWC' --loc_idx 'Toronto_03559.8.2' --obj_name='car' --augmentation True --image_size 50 --stride 20 --num-epochs 500 --learning_rate 0.0001 --batch_size 200 --weight 500 --saved_model_path 'TGG.hd5f'
 
 ### Step 3: Evaluation
