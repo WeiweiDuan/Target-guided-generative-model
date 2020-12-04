@@ -1,23 +1,33 @@
 import cv2
 import os
 import numpy as np
-from utils import create_folder, remove_files
+import argparse
+from utils.helper import create_folder, remove_files
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--data_dir", type=str, default='/data/weiweidu/COWC/DetectionPatches_800x800/Toronto_ISPRS')
+parser.add_argument("--loc_idx", type=str, default='Toronto_03559.8.2')
+parser.add_argument("--mask_name", type=str, default=None)
+parser.add_argument("--obj_name", type=str, default='car')
+parser.add_argument("--stride", type=int, default=20)
+parser.add_argument("--win_size", type=int, default=40)
+args = parser.parse_args()
 
 # save the cropped images within the region in temp folder
 unlabeled_imgs_path = './temp'
 
 # the directory of the dataset, such as xView, DIOR, COWC
-data_dir = '/data/weiweidu/COWC/DetectionPatches_800x800/Toronto_ISPRS'
+data_dir = args.data_dir
 # the location index or name
-loc_idx = 'Toronto_03559.8.2'
+loc_idx = args.loc_idx
 image_name = loc_idx+'.jpg'
 # the region-level mask
 mask_name = None
-obj_name = 'car'
+obj_name = args.obj_name
 
 # the sliding window size and stride to crop the images within the region-of-interest
-stride = 20
-win_size = 40
+stride = args.stride
+win_size = args.win_size
 
 image = cv2.imread(os.path.join(data_dir, image_name))
 if mask_name == None:
