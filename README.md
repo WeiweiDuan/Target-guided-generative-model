@@ -12,7 +12,9 @@ cuda == 8.0
 
 numpy, cv2, os
 
-### Alternatively, all the required packages and libaries are in the docker imagery. Here is the command to run the docker imagery
+### Alternatively, all the required packages and libaries are in the docker imagery. 
+Here is the command to run the docker imagery
+
 sudo nvidia-docker run -t -i -v {local_dir}:{docker_dir} -p 8888:8888  spatialcomputing/map_text_recognition_gpu 
 
 ### 2) Run TGG
