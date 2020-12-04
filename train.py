@@ -1,22 +1,13 @@
-from keras.layers import Lambda, Input, Dense, Merge, Concatenate,Multiply, Add, add, Activation
-from keras.models import Model
-from keras.losses import mse, binary_crossentropy
-from keras.utils import plot_model
-from keras import backend as K
-from keras.optimizers import *
-from keras.callbacks import ModelCheckpoint
-from keras import metrics
-
-from utils import load_data, data_augmentation, helper
 import numpy as np
-import matplotlib.pyplot as plt
 import argparse
 import os
 import cv2
-from keras import metrics
 import tensorflow as tf
 import keras
 import TGG
+import argparse
+from keras.optimizers import *
+from utils import load_data, data_augmentation, helper
 
 def process_inputs(_x_u, _x_l, batch_size):
     np.random.shuffle(_x_u)
@@ -75,19 +66,40 @@ def inference(model, x_test, x_test_idx, x_l_test, loc_name, thres, pos_folder_p
         print(thres, num_detected)
     print('number of detected in {:s} is {:d}'.format(loc_name, num_detected))
 
+    
+parser = argparse.ArgumentParser()
+parser.add_argument("--dataset_name", type=str, default='COWC')
+parser.add_argument("--obj_name", type=str, default='car')
+parser.add_argument("--loc_idx", type=str, default='car')
+parser.add_argument("--augmentation", type=boolean, default=True)
+parser.add_argument("--image_size", type=int, default=50)
+parser.add_argument("--stride", type=int, default=20)
+parser.add_argument("--num_epochs", type=int, default=400)
+parser.add_argument("--learning_rate", type=float, default=0.0001)
+parser.add_argument("--batch_size", type=int, default=400)
+parser.add_argument("--weight", type=int, default=500)
+parser.add_argument("--saved_model_path", type=str, default='TGG.h5df')
+args = parser.parse_args()
 #######################################################    
 # hyperparamters
 os.environ["CUDA_VISIBLE_DEVICES"]="2"
-obj_name = 'ship'
-DATA_DIR = '_'.join([obj_name, 'DIOR', 'test'])
+obj_name = args.obj_name
+dataset_name = args.dataset_name
+loc_idx = args.loc_idx
+DATA_DIR = '_'.join([obj_name, args.dataset_name, 'test'])
 
-SHIFT_LIST = []#[-2,-1,0,1,2] 
-ROTATION_ANGLE = [180,360]#[90,180,270,360]#[45,90,135,180,225,270,315,360]#
-IMG_SIZE = 30
-STRIDE = 10
-EPOCHS = 400
-LEARNING_RATE = 0.0001
-BATCH_SIZE = 300
+if args.augmentation:
+    SHIFT_LIST = [-2,-1,0,1,2] 
+    ROTATION_ANGLE = [90,180,270,360]
+else: 
+    SHIFT_LIST = [] 
+    ROTATION_ANGLE = []
+    
+IMG_SIZE = args.image_size
+STRIDE = args.stride
+EPOCHS = args.num_epochs
+LEARNING_RATE = args.learnign_rate
+BATCH_SIZE = args.batch_size
 
 latent_dim = 16#32, 5
 intermediate_dim = 256#256 for dior ships
@@ -96,7 +108,7 @@ optimizer = Adam(lr=LEARNING_RATE)
 # optimizer = RMSprop(lr=LEARNING_RATE)
 initializer = 'glorot_normal'#'random_uniform'#
 original_dim = IMG_SIZE*IMG_SIZE*3
-w_recons, w_kl, w_ce = IMG_SIZE*IMG_SIZE*3.0, 1.0, 500.0
+w_recons, w_kl, w_ce = IMG_SIZE*IMG_SIZE*3.0, 1.0, args.weight
 threshold = 0.5
 
 path = os.path.join('multi_check_data',loc_idx)
