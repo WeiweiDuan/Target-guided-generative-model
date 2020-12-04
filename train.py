@@ -75,9 +75,9 @@ def inference(model, x_test, x_test_idx, x_l_test, loc_name, thres, pos_folder_p
         print(thres, num_detected)
     print('number of detected in {:s} is {:d}'.format(loc_name, num_detected))
 
+#######################################################    
 # hyperparamters
 os.environ["CUDA_VISIBLE_DEVICES"]="2"
-iteration = 1
 obj_name = 'ship'
 DATA_DIR = '_'.join([obj_name, 'DIOR', 'test'])
 
@@ -102,24 +102,29 @@ threshold = 0.5
 path = os.path.join('multi_check_data',loc_idx)
 pos_samples_path = os.path.join('multi_maps_data',obj_name,loc_idx,'pos_samples')
 map_path = os.path.join(DATA_DIR, loc_idx+'.jpg')
+SAVE_MODEL_PATH = os.path.join(obj_name,loc_idx,'_'.join(['TGG',loc_idx+'.hdf5']))
 print(pos_samples_path)
 print(map_path)
+#######################################################
+
+#######################################################
+# Data Processing
 labele_samples, _ = load_data.load_wetland_samples(pos_samples_path)
 all_samples, _ = load_data.load_all_data(map_path, '', IMG_SIZE, STRIDE)
 _x_u, _x_l_aug = process_inputs(all_samples, labele_samples, BATCH_SIZE)
 print('processing {:d}, {:s}: '.format(i, loc_idx))
 print('x_u, x_l_aug shape: ', _x_u.shape, _x_l_aug.shape)
-if iteration > 0:
-    print('loaded model {:s}'.format('_'.join(['TGG',loc_idx+'.hdf5'])))
-    LOAD_MODEL_PATH = os.path.join('multi_maps_data',obj_name,loc_idx,'_'.join(['TGG',loc_idx+'.hdf5']))
-else:
-    LOAD_MODEL_PATH = None
-SAVE_MODEL_PATH = os.path.join('multi_maps_data',obj_name,loc_idx,'_'.join(['TGG',loc_idx+'.hdf5']))
+#######################################################
+
+#######################################################
+# Training Phase
 vae = TGG.initialize_tgg(original_dim, num_cls, latent_dim, intermediate_dim,w_recons, w_kl, w_ce)
 optimizer = Adam(lr=LEARNING_RATE)
 TGG.train_tgg(vae, optimizer, _x_u, _x_l_aug, EPOCHS, BATCH_SIZE, SAVE_MODEL_PATH, LOAD_MODEL_PATH)
+#######################################################
 
-SAVE_MODEL_PATH = os.path.join('multi_maps_data',obj_name,loc_idx,'_'.join(['TGG',loc_idx+'.hdf5']))
+#######################################################
+# Testing Phase
 vae = TGG.initialize_tgg(original_dim, num_cls, latent_dim, intermediate_dim,w_recons, w_kl, w_ce)
 vae.load_weights(SAVE_MODEL_PATH)
 pos_samples_path = os.path.join('multi_maps_data',obj_name,loc_idx,'pos_samples')
@@ -132,3 +137,4 @@ x_test = np.array(x_test) / 255.0
 x_test = np.reshape(x_test, (-1, IMG_SIZE*IMG_SIZE*3))
 threshold = 0.501
 inference(vae, x_test,  x_test_idx, _x_l_aug, loc_idx, threshold, pos_samples_path)
+#######################################################
