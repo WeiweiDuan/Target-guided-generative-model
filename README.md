@@ -15,7 +15,7 @@ numpy, cv2, os
 ### Alternatively, all the required packages and libaries are in the docker imagery. 
 **Here is the command to run the docker imagery**
 
-<mark>sudo nvidia-docker run -t -i -v {local_dir}:{docker_dir} -p 8888:8888  spatialcomputing/map_text_recognition_gpu </mark>
+<code>sudo nvidia-docker run -t -i -v {local_dir}:{docker_dir} -p 8888:8888  spatialcomputing/map_text_recognition_gpu </code>
 
 ### 2) Run TGG
 ### Step 1: Data Generation
