@@ -117,8 +117,12 @@ def gen_recog_grids(recog_mask, pred_points, grid_size, img_size, overlapping_th
                 reg_neg_grids.append([grid_x_c, grid_y_c])
     return reg_pos_grids, reg_neg_grids
 
-def precision_recall_f1(annotation_dir,pred_file,target_obj_name,\
-                        loc_name,grid_size,img_size,img_map_shape,overlapping_thres):
+def precision_recall_f1(data_dir,annotation_dir,pred_dir,target_obj_name,\
+                        loc_name,grid_size,img_size,overlapping_thres=0.5):
+    map_path = os.path.join(data_dir, loc_name+'.jpg')
+    map_img = cv2.imread(map_path)
+    img_map_shape = map_img.shape
+    
     pred_file = os.path.join(pred_dir, target_obj_name,\
                              "_".join([loc_name,target_obj_name,'pred_points.txt']))
          
