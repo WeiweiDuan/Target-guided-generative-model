@@ -10,7 +10,7 @@ tensorflow-gpu == 1.2.0
 
 cuda == 8.0 
 
-numpy, cv2, os
+numpy, cv2, os, shutil, 
 
 ### Alternatively, all the required packages and libaries are in the docker imagery. 
 **Here is the command to run the docker imagery**
