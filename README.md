@@ -41,6 +41,6 @@ The recognition results are top-left coordinates of cropped images, saved in a t
 
 ### Step 3: Evaluation
 **The evaluation script takes bounding-box level ground truth and image-level recognition results as inputs.<br/> 
-The results are evaluated by precision, recall, and F1 score in the grid level. **
+The results are evaluated by precision, recall, and F1 score in the grid level.**
 
 <code>python3 cal_eval.py --annotation_dir {path-to-ground-truth-folder} --pred_dir {path-to-TGG-ressult-folder} --obj_name {target-object-name} --loc_idx 'Toronto_03559.8.2' --grid_size {grid-size-for-eval} --image-size {crop-image-size}</code>
