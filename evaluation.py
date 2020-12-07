@@ -119,26 +119,13 @@ def gen_recog_grids(recog_mask, pred_points, grid_size, img_size, overlapping_th
 
 def precision_recall_f1(annotation_dir,pred_file,target_obj_name,\
                         loc_name,grid_size,img_size,img_map_shape,overlapping_thres):
-    #pred_file = os.path.join(pred_dir, target_obj_name,\
-    #                         "_".join([loc_name,target_obj_name,'pred_points.txt']))
-    #pred_file = os.path.join(pred_dir, target_obj_name,\
-    #                         "_".join([loc_name,target_obj_name,'VaDE','cluster1.txt']))
-    #pred_file = os.path.join(annotation_dir,\
-    #                         "_".join([loc_name,target_obj_name,'VaDE','cluster1.txt']))
-    #pred_file = os.path.join("/data/weiweidu/Deep-Spectral-Clustering-using-Dual-Autoencoder-Network/res", "_".join([loc_name,target_obj_name,'cluster1.txt']))
-    #pred_file = os.path.join("/data/weiweidu/Adversarial-Variational-Semi-supervised-Learning/res", "_".join(['xView',target_obj_name,loc_name,'pred_points.txt']))
-    #pred_file = os.path.join(pred_dir,"_".join([loc_name,'pred_points.txt']))
+    pred_file = os.path.join(pred_dir, target_obj_name,\
+                             "_".join([loc_name,target_obj_name,'pred_points.txt']))
          
     recog_mask = gen_recognition_mask(pred_file, img_map_shape, img_size)
     
-    #gt_file = os.path.join(annotation_dir, loc_name+'.xml')
-    #print(gt_file)
-    #for COWC car
-    #gt_file = os.path.join(annotation_dir, loc_name+'.gt_points.txt')
-    #loc_name, loc_idx = loc_name.split('_')[0],loc_name.split('_')[1]
-    #gt_file = os.path.join(annotation_dir, '_'.join([loc_name, target_obj_name,loc_idx,'gt','bbox.txt']))
-    #for USGS wetland
-    gt_file = os.path.join(annotation_dir, '_'.join([target_obj_name,'gt','bbox.txt']))
+
+    gt_file = os.path.join(annotation_dir, '_'.join([loc_name, target_obj_name,loc_idx,'gt','bbox.txt']))
     gt_mask = gen_gt_mask(gt_file, target_obj_name, img_map_shape)
     
     true_pos_grids, true_neg_grids = gen_gt_grids(gt_mask, gt_file, target_obj_name, grid_size, overlapping_thres)
