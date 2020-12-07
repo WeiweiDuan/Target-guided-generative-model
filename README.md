@@ -21,15 +21,20 @@ numpy, cv2, os
 ### Step 1: Data Generation
 <code>python3 crop_images.py --data_dir {path-to-dataset} --loc_idx {name-or-index-of-image} --mask_name {region-annotation} --obj_name {target-object-name} --stride {sliding-window-stride} --win_size {sliding-window-size} </code>
   
-For example, <code>python3 crop_images.py --data_dir '/data/weiweidu/COWC/DetectionPatches_800x800/Toronto_ISPRS' --loc_idx 'Toronto_03559.8.2' --mask_name None --obj_name='car' --stride=20 --win_size 50 </code>
+**For example,** <code>python3 crop_images.py --data_dir '/data/weiweidu/COWC/DetectionPatches_800x800/Toronto_ISPRS' --loc_idx 'Toronto_03559.8.2' --mask_name None --obj_name='car' --stride=20 --win_size 50 </code>
 
 <code>python3 gen_train_data.py --dataset_name {dataset-name} --loc_idx {name-or-index-of-image} --obj_name {target-object-name} --pos_names {list-of-target-images-names} --sample_portion {percentage-of-cropped-images} </code>
 
-For example, <code>python3 gen_train_data.py --dataset_name 'COWC' --loc_idx 'Toronto_03559.8.2' --obj_name='car' --pos_names ['100_100'] --sample_portion 1.0</code>
+**For example,** <code>python3 gen_train_data.py --dataset_name 'COWC' --loc_idx 'Toronto_03559.8.2' --obj_name='car' --pos_names ['100_100'] --sample_portion 1.0</code>
 
 ### Step 2: Iteratively Training TGG
+TGG takes cropped images and labeled target image(s) as inputs. The recognition results are top-left coordinates of cropped images, saved in a txt file.
+
 <code>python3 train.py --dataset_name {dataset-name} --loc_idx {name-or-index-of-image} --obj_name {target-object-name} --augmentation {True/False} --image_size {sliding-window-size} --stride {sliding-window-stride} --num_epochs {number-of-epochs} --learning_rate {learning-rate} --batch_size {batch-size} --weight {weight-for-multiloss} --saved_model_path {path-to-save-model} </code>
   
-For example, <code>python3 train.py --dataset_name 'COWC' --loc_idx 'Toronto_03559.8.2' --obj_name='car' --augmentation True --image_size 50 --stride 20 --num-epochs 500 --learning_rate 0.0001 --batch_size 200 --weight 500 --saved_model_path 'TGG.hd5f' </code>
+**For example,** <code>python3 train.py --dataset_name 'COWC' --loc_idx 'Toronto_03559.8.2' --obj_name='car' --augmentation True --image_size 50 --stride 20 --num-epochs 500 --learning_rate 0.0001 --batch_size 200 --weight 500 --saved_model_path 'TGG.hd5f' </code>
 
 ### Step 3: Evaluation
+The evaluation script takes bounding-box level ground truth and image-level recognition results as inputs. The results are evaluated by precision, recall, and F1 score in the grid level. 
+
+<code>python3 evaluation.py --annotation_dir {path-to-ground-truth-folder} --pred_dir {path-to-TGG-ressult-folder} --obj_name {target-object-name} --loc_idx 'Toronto_03559.8.2' --grid_size {grid-size-for-eval} --image-size {crop-image-size}
