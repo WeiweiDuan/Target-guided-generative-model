@@ -5,15 +5,10 @@
 ## Paper citation:
 
 @article{duanguided,
-
-  title={Guided Generative Models using Weak Supervision for Detecting Object Spatial Arrangement in Overhead Images},
-  
-  author={Duan, Weiwei and Chiang, Yao-Yi and Leyk, Stefan and Uhl, Johannes H and Knoblock, Craig A},
-  
+  title={Guided Generative Models using Weak Supervision for Detecting Object Spatial Arrangement in Overhead Images},  
+  author={Duan, Weiwei and Chiang, Yao-Yi and Leyk, Stefan and Uhl, Johannes H and Knoblock, Craig A},  
   booktitle={2021 IEEE International Conference on Big Data (Big Data)},
-
-  year={2021},
-  
+  year={2021},  
   organization={IEEE}
 }
 
