@@ -1,5 +1,25 @@
-# Target Guided Generative Clustering Model (TGG)
+# Target Guided Generative Model (TGGM)
+
+## Paper link: https://arxiv.org/abs/2112.05786
+
+## Paper citation:
+
+@article{duanguided,
+
+  title={Guided Generative Models using Weak Supervision for Detecting Object Spatial Arrangement in Overhead Images},
+  
+  author={Duan, Weiwei and Chiang, Yao-Yi and Leyk, Stefan and Uhl, Johannes H and Knoblock, Craig A},
+  
+  booktitle={2021 IEEE International Conference on Big Data (Big Data)},
+
+  year={2021},
+  
+  organization={IEEE}
+}
+
+
 ## The goal is to detect the approximate locations of target objects within a region-of-interest using only one or a few manually labeled target object
+
 
 ### 1) Rerequired libraries
 Python == 3.5
