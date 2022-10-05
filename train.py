@@ -68,10 +68,9 @@ def inference(model, x_test, x_test_idx, x_l_test, thres, pos_folder_path, save_
 
     
 parser = argparse.ArgumentParser()
-# parser.add_argument("--dataset_name", type=str, default='COWC')
-# parser.add_argument("--obj_name", type=str, default='car')
-# parser.add_argument("--loc_idx", type=str, default='car')
-parse.add_argument("--labeled_img_path", type=str, helper='a folder path saving the labeled images')
+parser.add_argument("--dataset_name", type=str, default='COWC')
+parser.add_argument("--obj_name", type=str, default='car')
+parser.add_argument("--loc_idx", type=str, default='car')
 parse.add_argument("--map_path", type=str, default='./data/COWC/Toronto_03553.7.8/Toronto_03553.7.8.jpg')
 parser.add_argument("--augmentation", type=boolean, default=True)
 parser.add_argument("--image_size", type=int, default=50)
@@ -86,9 +85,9 @@ args = parser.parse_args()
 #######################################################    
 # hyperparamters
 os.environ["CUDA_VISIBLE_DEVICES"] = "2"
-# obj_name = args.obj_name
-# dataset_name = args.dataset_name
-# loc_idx = args.loc_idx
+obj_name = args.obj_name
+dataset_name = args.dataset_name
+loc_idx = args.loc_idx
 # DATA_DIR = '_'.join([obj_name, args.dataset_name, 'test'])
 
 if args.augmentation:
@@ -114,7 +113,9 @@ original_dim = IMG_SIZE*IMG_SIZE*3
 w_recons, w_kl, w_ce = IMG_SIZE*IMG_SIZE*3.0, 1.0, args.weight
 threshold = 0.5
 
-pos_samples_path = args.labeled_img_path
+sample_path = os.path.join('data', dataset_name, obj_name)
+loc_name = '_'.join([loc_idx, obj_name])
+pos_samples_path = os.path.join(sample_path, loc_name+'_samples', 'positive')
 map_path = args.map_path
 save_detection_path = args.save_detection_folder
 SAVE_MODEL_PATH = args.saved_model_path
