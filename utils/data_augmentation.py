@@ -76,11 +76,11 @@ def rotate_image(image, angle):
         image_height* image_height
     )
     #
-    diagonal = round(math.sqrt(diagonal_square))
-    padding_top = round((diagonal-image_height) / 2)
-    padding_bottom = round((diagonal-image_height) / 2)
-    padding_right = round((diagonal-image_width) / 2)
-    padding_left = round((diagonal-image_width) / 2)
+    diagonal = int(math.sqrt(diagonal_square))
+    padding_top = int((diagonal-image_height) / 2)
+    padding_bottom = int((diagonal-image_height) / 2)
+    padding_right = int((diagonal-image_width) / 2)
+    padding_left = int((diagonal-image_width) / 2)
     padded_image = cv2.copyMakeBorder(image,
                                       top=padding_top,
                                       bottom=padding_bottom,
