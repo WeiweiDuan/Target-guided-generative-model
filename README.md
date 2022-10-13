@@ -18,7 +18,9 @@
 
 ### 1) Rerequired libraries
 If cuda == 8.0, Python == 3.5, Keras == 2.1.6, tensorflow-gpu == 1.2.0 
+
 If cuda == 10.0, Python == 3.6.9, Keras == 2.1.6, tensorflow == 1.7.0
+
 Other packages: numpy, cv2, os, shutil, 
 
 ### Alternatively, all the required packages and libaries are in the docker imagery, which using cuda==10.0. 
@@ -29,7 +31,9 @@ Other packages: numpy, cv2, os, shutil,
 ### 2) Run TGG
 ### Step 1: Data Generation
 **Firstly, cropping images within the region level annotation**
+
 The inputs are a map image and a mask for the region level annotation. 
+
 The outputs are the cropped images saved in "./temp" folder
 
 **** Here is the command to crop images
@@ -38,8 +42,11 @@ The outputs are the cropped images saved in "./temp" folder
 **For example,** <code>python3 crop_images.py --data_dir './data/COWC/Toronto_03553.7.8' --loc_idx 'Toronto_03553.7.8' --mask_name None --obj_name='car' --stride=20 --win_size 50 </code>
 
 **Secondly, choosing target images as labeled data from the cropped images**
+
 You choose one or few target images in the ./temp folder, and put the chosen images' names in the "--pos_names" parameters. Please separated the names by commas
+
 Besides the "--pos_names", generating training data needs parameters: dataset name (--dataset_name), image name (--loc_idx), target object name (--obj_name), and the proportion of cropped images using for training (--sample_portion)
+
 The outputs are 1) labeled target images in a folder named as "positive" in a folder in the same directory of map image, 2) unlabeled cropped images in a folder named as "subset" in a folder in the same directory of map image. The number of images in the "subset" folder depends on the "--sample_portion".
 
 **** Here is the command to generate training data
@@ -49,7 +56,9 @@ The outputs are 1) labeled target images in a folder named as "positive" in a fo
 
 ### Step 2: Iteratively Training TGG
 **TGG takes cropped images and labeled target image(s) as inputs.<br/>
+
 The outputs are predicted target images saved in a folder named by "--save_detected_images". <br/>
+
 The images' names in the folder are the top-left coordinates of cropped images.**
 
 <code>python3 train.py --map_path {path-to-map-path} --label_img_dir {dir-to-labeled-img} --image_size {sliding-window-size} --stride {sliding-window-stride} --num_epochs {number-of-epochs} --learning_rate {learning-rate} --weight {weight-for-CEloss} --saved_model_dir {dir-to-save-model} --saved_model_name {saved-model-name} --save_detected_images </code>
