@@ -60,7 +60,7 @@ The outputs are labeled target images in a folder named as "positive" in a folde
 ### Step 2: Iteratively Training TGG
 **TGG takes cropped images and labeled target image(s) as inputs.<br/>
 
-The outputs are predicted target images saved in a folder named by "--save_detected_images". <br/>
+The outputs are predicted target images saved in a folder named by "--save_detection_folder". <br/>
 
 The images' names in the folder are the top-left coordinates of cropped images.**
 
