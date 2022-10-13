@@ -16,14 +16,12 @@ parser.add_argument("--loc_idx", type=str, default='Toronto_03553.7.8')
 parser.add_argument("--obj_name", type=str, default='car')
 parser.add_argument("--pos_names", type=str, default='100_100',
                    help="labeled image name, separated by comma")
-parser.add_argument("--sample_portion", type=float, default=1.0)
 args = parser.parse_args()
 
 unlabeled_imgs_path = './temp'
 # the name of chosen target images, named by top_left coordinate
 pos_names = args.pos_names.split(',')
 img_type = '.png'
-sample_portion = args.sample_portion
 
 # the dir to save manually labeled and classified positive images
 dataset_name = args.dataset_name
@@ -48,8 +46,6 @@ for img_name in pos_names:
     copyfile(src, dst)
     
 num_imgs = len([name for name in os.listdir(unlabeled_imgs_path) if os.path.isfile(os.path.join(unlabeled_imgs_path, name))])
-num_samples = int(num_imgs*sample_portion)
-print('num of cropped images: ', num_imgs)
 
 
 create_folder(subset_folder_path)
@@ -59,11 +55,4 @@ img_names = load_file_names(unlabeled_imgs_path)
 img_names = np.array(img_names)
 np.random.shuffle(img_names)
 
-for i in range(num_samples):
-    img_name = img_names[i]
-    src = os.path.join(unlabeled_imgs_path, img_name+img_type)
-    dst = os.path.join(subset_folder_path, img_name+img_type)
-    copyfile(src, dst)
-
 print('==== the labeled positive images are saved in %s ===='%(pos_folder_path))
-print('==== all cropped images within the region are saved in %s ===='%(subset_folder_path))
