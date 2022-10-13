@@ -5,8 +5,9 @@ import argparse
 from utils.helper import create_folder, remove_files
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--data_dir", type=str, default='/data/weiweidu/COWC/DetectionPatches_800x800/Toronto_ISPRS')
-parser.add_argument("--loc_idx", type=str, default='Toronto_03559.8.2')
+parser.add_argument("--data_dir", type=str, default='./data/COWC/Toronto_03553.7.8')
+parser.add_argument("--loc_idx", type=str, default='Toronto_03553.7.8')
+parser.add_argument("--img_type", type=str, default='.jpg')
 parser.add_argument("--mask_name", type=str, default=None)
 parser.add_argument("--obj_name", type=str, default='car')
 parser.add_argument("--stride", type=int, default=20)
@@ -20,7 +21,7 @@ unlabeled_imgs_path = './temp'
 data_dir = args.data_dir
 # the location index or name
 loc_idx = args.loc_idx
-image_name = loc_idx+'.jpg'
+image_name = loc_idx + args.img_type
 # the region-level mask
 mask_name = None
 obj_name = args.obj_name
@@ -52,4 +53,4 @@ for row in range(0,mask.shape[0]-win_size,stride):
             cv2.imwrite(os.path.join(unlabeled_imgs_path, str(row)+'_'+str(col)+'.png'), sub_img)
             num_total_img += 1
             img_names.append(str(row)+'_'+str(col))
-print('done to write cropped images in ', unlabeled_imgs_path)
+print('done to save cropped images in ', unlabeled_imgs_path)
