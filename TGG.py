@@ -121,11 +121,12 @@ def initialize_tgg(original_dim, num_cls, latent_dim, intermediate_dim, w_recons
     tgg.add_loss(tgg_loss)
     return tgg
 
-def train_tgg(model, optimizer, _x_u, _x_l_aug, epochs, batch_size, save_model_path, load_model_path=None):
+def train_tgg(model, optimizer, _x_u, _x_l_aug, epochs, save_model_path, load_model_path=None):
     model.compile(optimizer=optimizer, loss=None)
     if load_model_path != None:
         model.load_weights(load_model_path)
-    num_samples = _x_u.shape[0]
+    batch_size = _x_u.shape[0]
+    num_samples = _x_u.shape[0]//batch_size * batch_size
     model.fit([_x_u,_x_l_aug,np.array([[1,0]]*num_samples),np.array([[0,1]]*num_samples)],\
         epochs=epochs, batch_size=batch_size, verbose=1)
     model.save_weights(save_model_path)
