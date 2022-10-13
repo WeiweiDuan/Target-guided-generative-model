@@ -37,7 +37,7 @@ The inputs are a map image and a mask for the region level annotation.
 
 The outputs are the cropped images saved in "./temp" folder
 
-**** Here is the command to crop images
+**Here is the command to crop images** 
 
 <code>python3 crop_images.py --data_dir {path-to-dataset} --loc_idx {name-or-index-of-image} --mask_name {region-annotation} --obj_name {target-object-name} --stride {sliding-window-stride} --win_size {sliding-window-size} </code>
   
@@ -51,7 +51,7 @@ Besides the "--pos_names", generating training data needs parameters: dataset na
 
 The outputs are labeled target images in a folder named as "positive" in a folder in the same directory of map image
 
-**** Here is the command to generate training data
+**Here is the command to generate training data**
 
 <code>python3 gen_train_data.py --dataset_name {dataset-name} --loc_idx {name-or-index-of-image} --obj_name {target-object-name} --pos_names {list-of-target-images-names} </code>
 
@@ -64,7 +64,7 @@ The outputs are predicted target images saved in a folder named by "--save_detec
 
 The images' names in the folder are the top-left coordinates of cropped images.**
 
-**** Here is the command to train TGGM in one iteration
+**Here is the command to train TGGM in one iteration** 
 
 <code>python3 train.py --map_path {path-to-map-path} --label_img_dir {dir-to-labeled-img} --image_size {sliding-window-size} --stride {sliding-window-stride} --num_epochs {number-of-epochs} --learning_rate {learning-rate} --weight {weight-for-CEloss} --saved_model_dir {dir-to-save-model} --saved_model_name {saved-model-name} --save_detection_folder </code>
   
